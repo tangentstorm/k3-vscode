@@ -2,16 +2,16 @@ import { beforeAll, describe, expect, test } from "vitest";
 import { EmptyFileSystem, type LangiumDocument } from "langium";
 import { expandToString as s } from "langium/generate";
 import { parseHelper } from "langium/test";
-import type { Model } from "k3-language";
-import { createK3Services, isModel } from "k3-language";
+import type { KCode } from "k3-language";
+import { createK3Services, isKCode } from "k3-language";
 
 let services: ReturnType<typeof createK3Services>;
-let parse:    ReturnType<typeof parseHelper<Model>>;
-let document: LangiumDocument<Model> | undefined;
+let parse:    ReturnType<typeof parseHelper<KCode>>;
+let document: LangiumDocument<KCode> | undefined;
 
 beforeAll(async () => {
     services = createK3Services(EmptyFileSystem);
-    parse = parseHelper<Model>(services.K3);
+    parse = parseHelper<KCode>(services.K3);
 
     // activate the following if your linking test requires elements from a built-in library, for example
     // await services.shared.workspace.WorkspaceManager.initializeWorkspace([]);
@@ -19,7 +19,7 @@ beforeAll(async () => {
 
 describe('Parsing tests', () => {
 
-    test('parse simple Model', async () => {
+    test('parse simple KCode', async () => {
         document = await parse(`
             person Langium
             Hello Langium!
@@ -35,10 +35,7 @@ describe('Parsing tests', () => {
             // prior to the tagged template expression we check for validity of the parsed document object
             //  by means of the reusable function 'checkDocumentValid()' to sort out (critical) typos first;
             checkDocumentValid(document) || s`
-                Persons:
-                  ${document.parseResult.value?.persons?.map(p => p.name)?.join('\n  ')}
-                Greetings to:
-                  ${document.parseResult.value?.greetings?.map(g => g.person.$refText)?.join('\n  ')}
+                ${document.parseResult.value?.lines?.join('\n  ')}
             `
         ).toBe(s`
             Persons:
@@ -55,6 +52,6 @@ function checkDocumentValid(document: LangiumDocument): string | undefined {
           ${document.parseResult.parserErrors.map(e => e.message).join('\n  ')}
     `
         || document.parseResult.value === undefined && `ParseResult is 'undefined'.`
-        || !isModel(document.parseResult.value) && `Root AST object is a ${document.parseResult.value.$type}, expected a 'Model'.`
+        || !isKCode(document.parseResult.value) && `Root AST object is a ${document.parseResult.value.$type}, expected a 'KCode'.`
         || undefined;
 }

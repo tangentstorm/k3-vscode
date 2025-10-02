@@ -1,4 +1,4 @@
-import type { Model } from 'k3-language';
+import type { KCode } from 'k3-language';
 import { createK3Services, K3LanguageMetaData } from 'k3-language';
 import chalk from 'chalk';
 import { Command } from 'commander';
@@ -15,7 +15,7 @@ const packageContent = await fs.readFile(packagePath, 'utf-8');
 
 export const generateAction = async (fileName: string, opts: GenerateOptions): Promise<void> => {
     const services = createK3Services(NodeFileSystem).K3;
-    const model = await extractAstNode<Model>(fileName, services);
+    const model = await extractAstNode<KCode>(fileName, services);
     const generatedFilePath = generateJavaScript(model, fileName, opts.destination);
     console.log(chalk.green(`JavaScript code generated successfully: ${generatedFilePath}`));
 };

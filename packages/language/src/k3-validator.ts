@@ -1,5 +1,5 @@
 import type { ValidationAcceptor, ValidationChecks } from 'langium';
-import type { K3AstType, Person } from './generated/ast.js';
+import type { K3AstType, KCode } from './generated/ast.js';
 import type { K3Services } from './k3-module.js';
 
 /**
@@ -9,7 +9,7 @@ export function registerValidationChecks(services: K3Services) {
     const registry = services.validation.ValidationRegistry;
     const validator = services.validation.K3Validator;
     const checks: ValidationChecks<K3AstType> = {
-        Person: validator.checkPersonStartsWithCapital
+        KCode: validator.checkCode
     };
     registry.register(checks, validator);
 }
@@ -19,13 +19,8 @@ export function registerValidationChecks(services: K3Services) {
  */
 export class K3Validator {
 
-    checkPersonStartsWithCapital(person: Person, accept: ValidationAcceptor): void {
-        if (person.name) {
-            const firstChar = person.name.substring(0, 1);
-            if (firstChar.toUpperCase() !== firstChar) {
-                accept('warning', 'Person name should start with a capital.', { node: person, property: 'name' });
-            }
-        }
+    checkCode(code: KCode, accept: ValidationAcceptor): void {
+        // TODO
     }
 
 }

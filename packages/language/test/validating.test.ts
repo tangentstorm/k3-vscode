@@ -3,16 +3,16 @@ import { EmptyFileSystem, type LangiumDocument } from "langium";
 import { expandToString as s } from "langium/generate";
 import { parseHelper } from "langium/test";
 import type { Diagnostic } from "vscode-languageserver-types";
-import type { Model } from "k3-language";
-import { createK3Services, isModel } from "k3-language";
+import type { KCode } from "k3-language";
+import { createK3Services, isKCode } from "k3-language";
 
 let services: ReturnType<typeof createK3Services>;
-let parse:    ReturnType<typeof parseHelper<Model>>;
-let document: LangiumDocument<Model> | undefined;
+let parse:    ReturnType<typeof parseHelper<KCode>>;
+let document: LangiumDocument<KCode> | undefined;
 
 beforeAll(async () => {
     services = createK3Services(EmptyFileSystem);
-    const doParse = parseHelper<Model>(services.K3);
+    const doParse = parseHelper<KCode>(services.K3);
     parse = (input: string) => doParse(input, { validation: true });
 
     // activate the following if your linking test requires elements from a built-in library, for example
@@ -57,7 +57,7 @@ function checkDocumentValid(document: LangiumDocument): string | undefined {
           ${document.parseResult.parserErrors.map(e => e.message).join('\n  ')}
     `
         || document.parseResult.value === undefined && `ParseResult is 'undefined'.`
-        || !isModel(document.parseResult.value) && `Root AST object is a ${document.parseResult.value.$type}, expected a 'Model'.`
+        || !isKCode(document.parseResult.value) && `Root AST object is a ${document.parseResult.value.$type}, expected a 'KCode'.`
         || undefined;
 }
 
