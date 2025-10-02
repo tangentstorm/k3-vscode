@@ -1,7 +1,7 @@
 import { startLanguageServer } from 'langium/lsp';
 import { NodeFileSystem } from 'langium/node';
 import { createConnection, ProposedFeatures } from 'vscode-languageserver/node.js';
-import { createK3Services } from 'k-3-language';
+import { createK3Services } from 'k3-language';
 
 // Create a connection to the client
 const connection = createConnection(ProposedFeatures.all);

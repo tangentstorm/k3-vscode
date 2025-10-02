@@ -1,5 +1,5 @@
-import type { Model } from 'k-3-language';
-import { createK3Services, K3LanguageMetaData } from 'k-3-language';
+import type { Model } from 'k3-language';
+import { createK3Services, K3LanguageMetaData } from 'k3-language';
 import chalk from 'chalk';
 import { Command } from 'commander';
 import { extractAstNode } from './util.js';

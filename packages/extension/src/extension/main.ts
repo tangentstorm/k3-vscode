@@ -34,12 +34,12 @@ async function startLanguageClient(context: vscode.ExtensionContext): Promise<La
 
     // Options to control the language client
     const clientOptions: LanguageClientOptions = {
-        documentSelector: [{ scheme: '*', language: 'k-3' }]
+        documentSelector: [{ scheme: '*', language: 'k3' }]
     };
 
     // Create the language client and start the client.
     const client = new LanguageClient(
-        'k-3',
+        'k3',
         'k3',
         serverOptions,
         clientOptions

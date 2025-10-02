@@ -2,8 +2,8 @@ import { afterEach, beforeAll, describe, expect, test } from "vitest";
 import { EmptyFileSystem, type LangiumDocument } from "langium";
 import { expandToString as s } from "langium/generate";
 import { clearDocuments, parseHelper } from "langium/test";
-import type { Model } from "k-3-language";
-import { createK3Services, isModel } from "k-3-language";
+import type { Model } from "k3-language";
+import { createK3Services, isModel } from "k3-language";
 
 let services: ReturnType<typeof createK3Services>;
 let parse:    ReturnType<typeof parseHelper<Model>>;

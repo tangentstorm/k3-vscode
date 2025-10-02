@@ -2,13 +2,13 @@
     "projectName": "K3",
     "languages": [
         {
-            "id": "k-3",
-            "grammar": "src/k-3.langium",
+            "id": "k3",
+            "grammar": "src/k3.langium",
             "fileExtensions": [
                 "k"
             ],
             "textMate": {
-                "out": "syntaxes/k-3.tmLanguage.json"
+                "out": "syntaxes/k3.tmLanguage.json"
             }
         }
     ],

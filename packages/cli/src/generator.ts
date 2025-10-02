@@ -1,4 +1,4 @@
-import type { Model } from 'k-3-language';
+import type { Model } from 'k3-language';
 import { expandToNode, joinToNode, toString } from 'langium/generate';
 import * as fs from 'node:fs';
 import * as path from 'node:path';

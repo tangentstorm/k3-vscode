@@ -1,6 +1,6 @@
 import type { ValidationAcceptor, ValidationChecks } from 'langium';
 import type { K3AstType, Person } from './generated/ast.js';
-import type { K3Services } from './k-3-module.js';
+import type { K3Services } from './k3-module.js';
 
 /**
  * Register custom validation checks.

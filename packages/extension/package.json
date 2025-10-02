@@ -12,31 +12,31 @@
     ],
     "contributes": {
         "languages": [{
-            "id": "k-3",
-            "aliases": ["k3", "k-3"],
+            "id": "k3",
+            "aliases": ["k3", "k3"],
             "extensions": [".k"],
             "configuration": "./language-configuration.json"
         }],
         "grammars": [{
-            "language": "k-3",
-            "scopeName": "source.k-3",
-            "path": "syntaxes/k-3.tmLanguage.json"
+            "language": "k3",
+            "scopeName": "source.k3",
+            "path": "syntaxes/k3.tmLanguage.json"
         }]
     },
     "activationEvents": [
-        "onLanguage:k-3"
+        "onLanguage:k3"
     ],
     "main": "./out/extension/main.cjs",
     "scripts": {
         "clean": "shx rm -fr *.tsbuildinfo out syntaxes",
         "vscode:prepublish": "npm run build",
-        "build:prepare": "shx mkdir -p ./syntaxes/ && shx cp -f ../language/syntaxes/k-3.tmLanguage.json ./syntaxes/k-3.tmLanguage.json",
+        "build:prepare": "shx mkdir -p ./syntaxes/ && shx cp -f ../language/syntaxes/k3.tmLanguage.json ./syntaxes/k3.tmLanguage.json",
         "build": "npm run build:prepare && tsc -b tsconfig.json && node esbuild.mjs",
         "build:clean": "npm run clean && npm run build",
         "watch": "npm run build:prepare && concurrently -n tsc,esbuild -c blue,yellow \"tsc -b tsconfig.json --watch\" \"node esbuild.mjs --watch\""
     },
     "dependencies": {
-        "k-3-language": "0.0.1",
+        "k3-language": "0.0.1",
         "vscode-languageclient": "~9.0.1",
         "vscode-languageserver": "~9.0.1"
     },
