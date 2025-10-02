@@ -4,6 +4,9 @@
     "version": "0.0.1",
     "displayName": "k3-vscode",
     "type": "module",
+    "repository": {
+        "url": "https://github.com/tangentstorm/k3-vscode"
+    },
     "engines": {
         "vscode": "^1.67.0"
     },
@@ -13,19 +16,14 @@
     "contributes": {
         "languages": [{
             "id": "k3",
-            "aliases": ["k3", "k3"],
-            "extensions": [".k"],
-            "configuration": "./language-configuration.json"
-        }],
+            "aliases": [ "k3" ],
+            "extensions": [ ".k" ],
+            "configuration": "./language-configuration.json" } ],
         "grammars": [{
             "language": "k3",
             "scopeName": "source.k3",
-            "path": "syntaxes/k3.tmLanguage.json"
-        }]
-    },
-    "activationEvents": [
-        "onLanguage:k3"
-    ],
+            "path": "syntaxes/k3.tmLanguage.json" }]},
+    "activationEvents": [ "onLanguage:k3" ],
     "main": "./out/extension/main.cjs",
     "scripts": {
         "clean": "shx rm -fr *.tsbuildinfo out syntaxes",
@@ -46,6 +44,6 @@
         "esbuild": "~0.25.5"
     },
     "vsce": {
-      "dependencies": false
+        "dependencies": false
     }
 }
