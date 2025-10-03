@@ -12,7 +12,7 @@ KCommand: x=COMMAND ;
 KLine
   : comment=KComment NL
   | command=KCommand NL
-  | stmts=KStmts? comment=KComment? NL
+  | stmts=KStmts comment=KComment? NL
   | NL;
 
 // Statements: either one-or-more expressions separated by semicolons,
@@ -26,13 +26,13 @@ KExpr
   | value=KReturn
   | value=KChain;
 
-KChain: atoms+=KChainAtom+ primColon=PRIMCOLON?;
+KChain: atoms+=KChainItem+ primColon=PRIMCOLON?;
+KChainItem: items+=KChainAtom+ (calls+=KCall*);
 KChainAtom:
       x=KCase
     | x=KFlow
     | x=KAssign
     | x=KFunc
-    | x=KCall
     | x=KNest
     | x=KLvalue
     | x=PRIM
@@ -49,15 +49,15 @@ KCase
 
 KFlow
   : kind=('if[' | 'while[' | 'do[') ']'
-  | kind=('if[' | 'while[' | 'do[') block=KBlock ']';
+  | kind=('if[' | 'while[' | 'do[') block=KBlock? ']';
 
 KNest: '(' ')'
      | '(' block=KBlock ')';
 
 // Block: at least one line (which itself consumes NL) with optional trailing stmts,
 // or just stmts (which must consume something due to KStmts definition above)
-KBlock: lines+=KLine (NL* lines+=KLine)* stmts=KStmts?
-      | stmts=KStmts;
+KBlock: lines+=KLine+ stmts=KStmts?
+      | stmts=KStmts ;
 
 KAssign: lvalue=KLvalue calls+=KCall* op=(':' | PRIMCOLON) rhs=KExpr;
 
