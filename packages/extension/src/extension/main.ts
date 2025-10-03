@@ -1,5 +1,5 @@
 import type { LanguageClientOptions, ServerOptions } from 'vscode-languageclient/node.js';
-import type * as vscode from 'vscode';
+import * as vscode from 'vscode';
 import * as path from 'node:path';
 import { LanguageClient, TransportKind } from 'vscode-languageclient/node.js';
 
@@ -12,10 +12,7 @@ export async function activate(context: vscode.ExtensionContext): Promise<void> 
 
 // This function is called when the extension is deactivated.
 export function deactivate(): Thenable<void> | undefined {
-    if (client) {
-        return client.stop();
-    }
-    return undefined;
+    return client?.stop()
 }
 
 async function startLanguageClient(context: vscode.ExtensionContext): Promise<LanguageClient> {
@@ -34,13 +31,15 @@ async function startLanguageClient(context: vscode.ExtensionContext): Promise<La
 
     // Options to control the language client
     const clientOptions: LanguageClientOptions = {
-        documentSelector: [{ scheme: '*', language: 'k3' }]
+        documentSelector: [{ scheme: '*', language: 'k3' }],
+        outputChannel: vscode.window.createOutputChannel('K3 Language server'),
+        traceOutputChannel: vscode.window.createOutputChannel('K3 LS Trace')
     };
 
     // Create the language client and start the client.
     const client = new LanguageClient(
-        'k3',
-        'k3',
+        'K3LanguageServer',
+        'K3',
         serverOptions,
         clientOptions
     );

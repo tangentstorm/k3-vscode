@@ -2,6 +2,7 @@ import { type Module, inject } from 'langium';
 import { createDefaultModule, createDefaultSharedModule, type DefaultSharedModuleContext, type LangiumServices, type LangiumSharedServices, type PartialLangiumServices } from 'langium/lsp';
 import { K3GeneratedModule, K3GeneratedSharedModule } from './generated/module.js';
 import { K3Validator, registerValidationChecks } from './k3-validator.js';
+import { K3SemanticTokens } from './k3-semantic-tokens.js';
 
 /**
  * Declaration of custom services - add your own service classes here.
@@ -24,9 +25,8 @@ export type K3Services = LangiumServices & K3AddedServices
  * selected services, while the custom services must be fully specified.
  */
 export const K3Module: Module<K3Services, PartialLangiumServices & K3AddedServices> = {
-    validation: {
-        K3Validator: () => new K3Validator()
-    }
+    validation: { K3Validator: () => new K3Validator() },
+    lsp: { SemanticTokenProvider: services=> new K3SemanticTokens(services) }
 };
 
 /**
