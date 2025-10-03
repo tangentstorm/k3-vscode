@@ -10,10 +10,7 @@ KComment: x=COMMENT ;
 KCommand: x=COMMAND ;
 
 KLine
-  : comment=KComment NL
-  | command=KCommand NL
-  | stmts=KStmts comment=KComment? NL
-  | NL;
+  : (comment=KComment | command=KCommand | (stmts=KStmts comment=KComment?))? NL;
 
 // Statements: either one-or-more expressions separated by semicolons,
 // or one-or-more standalone semicolons (to preserve k3's empty exprs)
@@ -22,8 +19,7 @@ KStmts
   | semicolons+=SEMI+;
 
 KExpr
-  : ':'
-  | value=KReturn
+  : value=KReturn
   | value=KChain;
 
 KChain: atoms+=KChainItem+ primColon=PRIMCOLON?;
@@ -36,7 +32,6 @@ KChainAtom:
     | x=KNest
     | x=KLvalue
     | x=PRIM
-    | x=PRIMCOLON
     | x=NUMCOLON
     | x=ADVERB
     | x=NUMBER
@@ -44,20 +39,16 @@ KChainAtom:
     | X=SYMBOL;
 
 KCase
-  : ':[' ']'
-  | ':[' block=KBlock ']';
+  : ':[' block=KBlock? ']';
 
 KFlow
-  : kind=('if[' | 'while[' | 'do[') ']'
-  | kind=('if[' | 'while[' | 'do[') block=KBlock? ']';
+  : kind=('if[' | 'while[' | 'do[') block=KBlock? ']';
 
-KNest: '(' ')'
-     | '(' block=KBlock ')';
+KNest: '(' block=KBlock? ')';
 
 // Block: at least one line (which itself consumes NL) with optional trailing stmts,
 // or just stmts (which must consume something due to KStmts definition above)
-KBlock: lines+=KLine+ stmts=KStmts?
-      | stmts=KStmts ;
+KBlock: lines+=KLine+ stmts=KStmts?;
 
 KAssign: lvalue=KLvalue calls+=KCall* op=(':' | PRIMCOLON) rhs=KExpr;
 
@@ -67,17 +58,15 @@ KIdent returns string:
     LNAME | GNAME;
 
 KCall:
-    '[' ']'
-  | '[' block=KBlock ']';
+    '[' block=KBlock? ']';
 
 Fsig:
     '[' name=LNAME? (SEMI more+=LNAME)* ']';
 
 KFunc :
-    '{' fsig=Fsig? block=KBlock '}'
-  | '{' fsig=Fsig? '}';
+    '{' fsig=Fsig? block=KBlock? '}';
 
-KReturn: ':' expr=KExpr;
+KReturn: ':' expr=KExpr?;
 
 // Lexer
 
